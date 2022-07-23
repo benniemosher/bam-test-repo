@@ -8,7 +8,9 @@ on:
 jobs:
   deployment:
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: dev
+      url: https://dev.notprod.live
     steps:
       - name: deploy
         run: echo ${{ secrets.AWS_ACCOUNT_ID }}
