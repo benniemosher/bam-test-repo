@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      # s3-bucket:
+      #   required: true
+      #   type: string
+      origin-folder:
+        required: false
+        type: string
+        default: 'assets/'
+      region:
+        required: false
+        type: string
+        default: 'us-east-1'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+    # uses: FundThatFlip/github-actions/.github/workflows/aws-s3-sync-folder.yaml@main
+      - uses: fundthatflip/static-assets-deploy-action@main
+        # secrets: inherit
+        with:
+          ORIGIN_FOLDER: ${{ inputs.origin-folder }}
+          AWS_REGION: ${{ inputs.region }}
+          AWS_S3_BUCKET: ${{ inputs.s3-bucket }}
+        secrets:
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}

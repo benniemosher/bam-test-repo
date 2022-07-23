@@ -10,11 +10,9 @@ jobs:
     strategy:
       matrix:
         environment: [dev, qa, stg, test, prod]
+        workflow: [build, deploy, release]
     runs-on: ubuntu-latest
     environment:
       name: ${{ matrix.environment }}
       url: https://${{ matrix.environment }}.notprod.live
-    steps:
-      - name: deploy
-        run: echo ${{ secrets.AWS_ACCOUNT_ID }}
-        # ...deployment-specific steps
+    uses: ./.github/workflows/${{ matrix.workflow }}.yml
