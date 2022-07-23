@@ -7,10 +7,13 @@ on:
 
 jobs:
   deployment:
+    strategy:
+      matrix:
+        environment: [dev, qa, stg, test, prod]
     runs-on: ubuntu-latest
     environment:
-      name: dev
-      url: https://dev.notprod.live
+      name: ${{ matrix.environment }}
+      url: https://${{ matrix.environment }}.notprod.live
     steps:
       - name: deploy
         run: echo ${{ secrets.AWS_ACCOUNT_ID }}
